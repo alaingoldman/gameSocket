@@ -17,6 +17,10 @@
         <div class="col col-lg-3">
                 <ul class="list-group">
                     <li class="list-group-item active">Active users</li>
+                    <div id="userlist">
+
+
+                    </div>
                 </ul>
         </div>
         <canvas id="ctx" width="500" height="500" style="border:1px solid green"></canvas>
@@ -30,18 +34,14 @@
         var socket = io();
         
         socket.on('nigaHere',function(data){
-            // console.log(data);
             var idName;
+            $("#userlist").empty();
             for(var i = 0; i < data.length; i++){
                 idName = "li#" + parseInt(data[i]);
                 if ($(idName).length === 0) {
-                    $( "<li class='list-group-item' id='" + data[i] + "'>user: "  + data[i] + "</li>" ).appendTo( ".list-group" );
+                    $( "<li class='list-group-item' id='" + data[i] + "'>user: "  + data[i] + "</li>" ).appendTo( "#userlist" );
                 }
             }
-            // var idName = "li#" + parseInt(data);
-            // if ($(idName).length === 0) {
-            //     $( "<li class='list-group-item' id='" + data + "'>user: "  + data + "</li>" ).appendTo( ".list-group" );
-            // }
         });
 
         socket.on('newPositions',function(data){
