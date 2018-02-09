@@ -4,9 +4,8 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <!-- <script src="web3.js"></script> -->
+    <script type="text/javascript" src="client/web3.js"></script>
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-
 </head>
 <body>
     <div class="container">
@@ -49,7 +48,13 @@
             for(var i = 0 ; i < data.length; i++)
                 ctx.fillText(data[i].number,data[i].x,data[i].y);      
         });
-    
+
+
+        // var socket = io.connect();
+        $('body').click(function(){
+            // alert("t");
+            socket.emit('create', 'room1');
+        })
         document.onkeydown = function(event){
             if(event.keyCode === 68)    //d
                 socket.emit('keyPress',{inputId:'right',state:true});
@@ -71,7 +76,22 @@
             else if(event.keyCode === 87) // w
                 socket.emit('keyPress',{inputId:'up',state:false});
         }
+        var web3;
 
+        setInterval(function(){
+            console.log("triggered");
+            if(typeof window.web3 !== "undefined" && typeof window.web3.currentProvider !== "undefined") {
+                web3 = new Web3(window.web3.currentProvider);
+                // debugger;
+            } else {
+                web3 = new Web3();
+                // debugger;
+            }
+        },250);
 
     </script>
 </html>
+
+
+
+

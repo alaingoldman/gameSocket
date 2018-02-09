@@ -7,7 +7,7 @@ app.get('/',function(req, res) {
 });
 app.use('/client',express.static(__dirname + '/client'));
  
-serv.listen(2000);
+serv.listen(3000);
 console.log("Server started.");
 
 var Player = function(id){
@@ -50,13 +50,19 @@ io.sockets.on('connection', function(socket){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
     });
+
+    socket.on('create', function(room) {
+        console.log("attemping to connect to room: " + room);
+        // console.log(socket);
+        socket.join(room);
+    });
 });
  
 setInterval(function(){
     var pack = [];
 
     for(var i in PLAYER_LIST){
-        console.log(i);
+        // console.log(i);
         pack.push(i);
     }
 
@@ -64,4 +70,4 @@ setInterval(function(){
         var socket = SOCKET_LIST[i];
         socket.emit('nigaHere', pack);
     }
-},2000);
+},250);
