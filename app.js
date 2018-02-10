@@ -54,6 +54,6 @@ setInterval(function(){
 
     for(var i in SOCKET_LIST){
         var socket = SOCKET_LIST[i];
-        socket.emit('nigaHere', pack);
+        socket.emit('dudeHere', pack);
     }
-},250);
+},1000);
