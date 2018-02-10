@@ -11,26 +11,28 @@
     <body>
         <div class="container">
             <a href="/">
-                <div class="jumbotron">
-                    <h5 class="text-danger"> < back</h5> 
-                    <h1> room page</h1> 
-                    <!--<p>Click player to play him in tic tac toe.</p> -->
-                </div>
+                <h5 class="text-danger"> back</h5> 
             </a>
-            <div class="row">
-                <div class="col col-lg-2 gridder"></div>
-                <div class="col col-lg-2 gridder"></div>
-                <div class="col col-lg-2 gridder"></div>
+            <div class="jumbotron">
+                <h1> you vs.</h1> 
+                <h3 id="opponent"> &nbsp; </h3> 
             </div>
-            <div class="row">
-                <div class="col col-lg-2 gridder"></div>
-                <div class="col col-lg-2 gridder"></div>
-                <div class="col col-lg-2 gridder"></div>
-            </div>
-            <div class="row">
-                <div class="col col-lg-2 gridder"></div>
-                <div class="col col-lg-2 gridder"></div>
-                <div class="col col-lg-2 gridder"></div>
+            <div class="shimmy">
+                <div class="row">
+                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder"></div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder"></div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder"></div>
+                </div>
             </div>
         </div>
     </body>
@@ -39,6 +41,8 @@
         var socket = io();
         var initiated = false;
 
+        var opponentAddress = this.location.pathname.replace("/game/", "");
+        $("#opponent").html(opponentAddress);
         socket.on('dudeHere',function(data){
             var idName;
             $("#userlist").empty();
@@ -72,5 +76,10 @@
             }
         }
         setInterval( defineweb3, 1000);
+
+        $('.gridder').click(function(){
+            console.log("w/e");
+            $(this).css("background-color", "yellow");
+        })
     </script>
 </html>
