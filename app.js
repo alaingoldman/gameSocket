@@ -56,4 +56,4 @@ setInterval(function(){
         var socket = SOCKET_LIST[i];
         socket.emit('dudeHere', pack);
     }
-},1000);
+},250);
