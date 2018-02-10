@@ -10,10 +10,13 @@
     </head>
     <body>
         <div class="container">
-            <div class="jumbotron">
-                <h1>game lobby</h1> 
-                <p>Click player to play him in tic tac toe.</p> 
-            </div>
+            <a href="/">
+                <div class="jumbotron">
+                    <h5 class="text-danger"> < back</h5> 
+                    <h1> room page</h1> 
+                    <!--<p>Click player to play him in tic tac toe.</p> -->
+                </div>
+            </a>
             <div class="col col-lg-3">
                 <ul class="list-group">
                     <li class="list-group-item active">Online users</li>
@@ -23,7 +26,7 @@
             </div>
         </div>
     </body>
-    <script>
+    <!--<script>
         var web3;
         var socket = io();
         var initiated = false;
@@ -34,7 +37,7 @@
             for(var i = 0; i < data.length; i++){
                 idName = "li#" + parseInt(data[i]);
                 if ($(idName).length === 0) {
-                    $( "<a href=/game/" +  data[i] + "><li class='list-group-item' id='" + data[i] + "'>user: "  + data[i] + "</li></a>" ).appendTo( "#userlist" );
+                    $( "<li class='list-group-item' id='" + data[i] + "'>user: "  + data[i] + "</li>" ).appendTo( "#userlist" );
                 }
             }
         });
@@ -61,5 +64,5 @@
             }
         }
         setInterval( defineweb3, 1000);
-    </script>
+    </script>-->
 </html>
