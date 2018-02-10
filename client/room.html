@@ -19,30 +19,43 @@
             </div>
             <div class="shimmy">
                 <div class="row">
-                    <div class="col col-sm-2 gridder"></div>
-                    <div class="col col-sm-2 gridder"></div>
-                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder" id="square_00"></div>
+                    <div class="col col-sm-2 gridder" id="square_01"></div>
+                    <div class="col col-sm-2 gridder" id="square_02"></div>
                 </div>
                 <div class="row">
-                    <div class="col col-sm-2 gridder"></div>
-                    <div class="col col-sm-2 gridder"></div>
-                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder" id="square_10"></div>
+                    <div class="col col-sm-2 gridder" id="square_11"></div>
+                    <div class="col col-sm-2 gridder" id="square_12"></div>
                 </div>
                 <div class="row">
-                    <div class="col col-sm-2 gridder"></div>
-                    <div class="col col-sm-2 gridder"></div>
-                    <div class="col col-sm-2 gridder"></div>
+                    <div class="col col-sm-2 gridder" id="square_20"></div>
+                    <div class="col col-sm-2 gridder" id="square_21"></div>
+                    <div class="col col-sm-2 gridder" id="square_22"></div>
                 </div>
             </div>
         </div>
     </body>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>
+        // globals 
         var web3;
         var socket = io();
         var initiated = false;
 
+        // connecting to firebase
+        var config = {
+            apiKey: "AIzaSyCyVq3TQ-ZsE965YHSnzGnax-v25F8GUCk",
+            authDomain: "test-stre.firebaseapp.com",
+            databaseURL: "https://test-stre.firebaseio.com"
+        };
+        firebase.initializeApp(config);
+
+        // getting address from url and showing it in page
         var opponentAddress = this.location.pathname.replace("/game/", "");
         $("#opponent").html(opponentAddress);
+
+        
         socket.on('dudeHere',function(data){
             var idName;
             $("#userlist").empty();
@@ -53,10 +66,6 @@
                 }
             }
         });
-
-        $('body').click(function(){
-            socket.emit('create', 'room1');
-        })
 
         function defineweb3(){
             if (initiated == false){
@@ -78,7 +87,6 @@
         setInterval( defineweb3, 1000);
 
         $('.gridder').click(function(){
-            console.log("w/e");
             $(this).css("background-color", "yellow");
         })
     </script>
