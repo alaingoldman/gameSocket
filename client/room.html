@@ -87,7 +87,19 @@
         setInterval( defineweb3, 1000);
 
         $('.gridder').click(function(){
-            $(this).css("background-color", "yellow");
+
+                        let q = firebase.database().ref("moves");
+                        q.push({
+                            gameId: 1,
+                            turn: 1,
+                            movePlayed: "01"
+                        }).then((f) => {
+                            //that.gotoReceipt(eggCount, language, ethTransaction);
+                            $(this).css("background-color", "yellow");
+                        }).catch((e) => {
+                            //that.gotoReceipt(eggCount, language, ethTransaction);
+                        })
+                        //$(this).css("background-color", "yellow");
         })
     </script>
 </html>
