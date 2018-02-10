@@ -13,24 +13,8 @@ console.log("Server started.");
 var Player = function(id){
     var self = {
         x:250,
-        y:250,
-        id:id,
-        pressingRight:false,
-        pressingLeft:false,
-        pressingUp:false,
-        pressingDown:false,
-        maxSpd:10,
+        y:250
     }
-    // self.updatePosition = function(){
-    //     if(self.pressingRight)
-    //         self.x += self.maxSpd;
-    //     if(self.pressingLeft)
-    //         self.x -= self.maxSpd;
-    //     if(self.pressingUp)
-    //         self.y -= self.maxSpd;
-    //     if(self.pressingDown)
-    //         self.y += self.maxSpd;
-    // }
     return self;
 }
 
@@ -43,9 +27,6 @@ io.sockets.on('connection', function(socket){
     socket.id = Math.floor(Math.random() * 2000);
     SOCKET_LIST[socket.id] = socket;
 
-    var player = Player(socket.id);
-    PLAYER_LIST[socket.id] = player;
-
     socket.on('disconnect',function(){
         delete SOCKET_LIST[socket.id];
         delete PLAYER_LIST[socket.id];
@@ -53,8 +34,14 @@ io.sockets.on('connection', function(socket){
 
     socket.on('create', function(room) {
         console.log("attemping to connect to room: " + room);
-        // console.log(socket);
         socket.join(room);
+    });
+
+    socket.on('web3Address', function(result) {
+        socket.id = result.address;
+        SOCKET_LIST[socket.id] = socket;
+        var player = Player(socket.id);
+        PLAYER_LIST[socket.id] = player;
     });
 });
  
@@ -62,7 +49,6 @@ setInterval(function(){
     var pack = [];
 
     for(var i in PLAYER_LIST){
-        // console.log(i);
         pack.push(i);
     }
 

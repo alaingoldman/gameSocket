@@ -14,80 +14,46 @@
             <p>This should load you based on your web3 address.</p> 
         </div>
         <div class="col col-lg-3">
-                <ul class="list-group">
-                    <li class="list-group-item active">Active users</li>
-                    <div id="userlist">
-
-
-                    </div>
-                </ul>
+            <ul class="list-group">
+                <li class="list-group-item active">Active users</li>
+                <div id="userlist">
+                </div>
+            </ul>
         </div>
-        <canvas id="ctx" width="500" height="500" style="border:1px solid green"></canvas>
     </div>
 </body>
 <script>
     
-        var ctx = document.getElementById("ctx").getContext("2d");
-        ctx.font = '30px Arial';
-    
-        var socket = io();
-        
-        socket.on('nigaHere',function(data){
-            var idName;
-            $("#userlist").empty();
-            for(var i = 0; i < data.length; i++){
-                idName = "li#" + parseInt(data[i]);
-                if ($(idName).length === 0) {
-                    $( "<li class='list-group-item' id='" + data[i] + "'>user: "  + data[i] + "</li>" ).appendTo( "#userlist" );
-                }
+    var socket = io();
+    var web3;
+    var initiated = false;
+
+    socket.on('nigaHere',function(data){
+        var idName;
+        $("#userlist").empty();
+        for(var i = 0; i < data.length; i++){
+            idName = "li#" + parseInt(data[i]);
+            if ($(idName).length === 0) {
+                $( "<li class='list-group-item' id='" + data[i] + "'>user: "  + data[i] + "</li>" ).appendTo( "#userlist" );
             }
-        });
-
-        socket.on('newPositions',function(data){
-            ctx.clearRect(0,0,500,500);
-            for(var i = 0 ; i < data.length; i++)
-                ctx.fillText(data[i].number,data[i].x,data[i].y);      
-        });
-
-
-        // var socket = io.connect();
-        $('body').click(function(){
-            // alert("t");
-            socket.emit('create', 'room1');
-        })
-        document.onkeydown = function(event){
-            if(event.keyCode === 68)    //d
-                socket.emit('keyPress',{inputId:'right',state:true});
-            else if(event.keyCode === 83)   //s
-                socket.emit('keyPress',{inputId:'down',state:true});
-            else if(event.keyCode === 65) //a
-                socket.emit('keyPress',{inputId:'left',state:true});
-            else if(event.keyCode === 87) // w
-                socket.emit('keyPress',{inputId:'up',state:true});
-            
         }
-        document.onkeyup = function(event){
-            if(event.keyCode === 68)    //d
-                socket.emit('keyPress',{inputId:'right',state:false});
-            else if(event.keyCode === 83)   //s
-                socket.emit('keyPress',{inputId:'down',state:false});
-            else if(event.keyCode === 65) //a
-                socket.emit('keyPress',{inputId:'left',state:false});
-            else if(event.keyCode === 87) // w
-                socket.emit('keyPress',{inputId:'up',state:false});
-        }
-        var web3;
+    });
 
-        setInterval(function(){
-            console.log("triggered");
+    $('body').click(function(){
+        socket.emit('create', 'room1');
+    })
+
+    function defineweb3(){
+        if (initiated == false){
             if(typeof window.web3 !== "undefined" && typeof window.web3.currentProvider !== "undefined") {
                 web3 = new Web3(window.web3.currentProvider);
-                // debugger;
+                socket.emit('web3Address',{address: web3.eth.accounts[0]});
             } else {
                 web3 = new Web3();
-                // debugger;
             }
-        },250);
+        }
+    }
+    setInterval( defineweb3, 1000);
 
     </script>
 </html>
